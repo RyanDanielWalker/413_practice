@@ -1,27 +1,25 @@
+import ChangeInPocket from './change.js';
+import './css/styles.css';
 import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import Triangle from './js/triangle.js';
-import Rectangle from './js/rectangle.js';
 
-$(document).ready(function() {
-  $('#triangle-checker-form').submit(function(event) {
+$(document).ready(function () {
+  $("#change-amount-input").submit(function (event) {
     event.preventDefault();
-    const length1 = parseInt($('#length1').val());
-    const length2 = parseInt($('#length2').val());
-    const length3 = parseInt($('#length3').val());
-    const triangle = new Triangle(length1, length2, length3);
-    const response = triangle.checkType();
-    $('#response').append(`<p>${response}</p>`);
-  });
+    const costOfItem = parseFloat($("#item-cost").val());
+    const quarters = parseFloat($("#quarters").val());
+    const dimes = parseFloat($("#dimes").val());
+    const nickels = parseFloat($("#nickels").val());
+    const pennies = parseFloat($("#pennies").val());
+    let myChange = new ChangeInPocket(quarters, dimes, nickels, pennies);
+    const answer = myChange.enoughMoney(costOfItem);
+    if (answer === true) {
+      $("#return").text("you have enough money");
+    } else {
+      $("#return").text("you do not have enough money");
+    }
 
-  $('#rectangle-area-form').submit(function(event) {
-    event.preventDefault();
-    const length1 = parseInt($('#rect-length1').val());
-    const length2 = parseInt($('#rect-length2').val());
-    const rectangle = new Rectangle(length1, length2);
-    const response = rectangle.getArea();
-    $('#response2').append(`<p> The area of the rectangle is ${response}.</p>`);
   });
 });
